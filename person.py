@@ -6,17 +6,17 @@ from virus import Virus
 class Person(object):
     ''' Person objects will populate the simulation. '''
 
-    def __init__(self, _id, is_vaccinated, infection=None):
+    def __init__(self, _id, is_alive, is_vaccinated, infection=None):
         ''' We start out with is_alive = True, because we don't make vampires or zombies.
         All other values will be set by the simulation when it makes each Person object.
         If person is chosen to be infected when the population is created, the simulation
         should instantiate a Virus object and set it as the value
         self.infection. Otherwise, self.infection should be set to None.
         '''
-        self._id = None  # int
-        self.is_alive = True  # boolean
-        self.is_vaccinated = None  # boolean
-        self.infection = None  # Virus object or None
+        self._id = _id  # int
+        self.is_alive = is_alive  # boolean
+        self.is_vaccinated = is_vaccinated  # boolean
+        self.infection = infection  # Virus object or None
 
     def did_survive_infection(self):
         ''' Generate a random number and compare to virus's mortality_rate.
@@ -26,24 +26,28 @@ class Person(object):
         '''
         # Only called if infection attribute is not None.
         # TODO:  Finish this method. Should return a Boolean
-        pass
+        # if self.infection is not None:
+
 
 
 # simple unit tests to ensure your Person class initializer works correctly
 def test_vacc_person_instantiation():
     # create some people to test if our init method works as expected
-    person = Person(1, True)
+    person = Person(1, True, True)
     assert person._id == 1
-    assert person.is_alive is True
-    assert person.is_vaccinated is True
-    assert person.infection is None
+    assert person.is_alive == True
+    assert person.is_vaccinated == True
+    assert person.infection == None
 
 
 def test_not_vacc_person_instantiation():
-    person = Person(2, False)
+    person = Person(2, True, False)
     # TODO: complete your own assert statements that test
     # the values at each attribute
-    # assert ...
+    assert person._id == 2
+    assert person.is_alive is True
+    assert person.is_vaccinated is False
+    assert person.infection is None
 
 
 def test_sick_person_instantiation():
