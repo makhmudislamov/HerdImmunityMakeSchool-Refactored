@@ -2,7 +2,7 @@ Github Workflow:
 
 1. Create a branch 
 2. Switch to new branch and work on your project
-3. push it to Github
+3. push it to Github: git push origin <<new branch name>>
 4. On Github WEBSITE: make pull request to master (can I merge two branches?)
 5. On Github WEBSITE: Send code review request to a partner
 6. On Github WEBSITE: After approval merge new branch to master
