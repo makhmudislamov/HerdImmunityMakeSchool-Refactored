@@ -29,6 +29,7 @@ class Person(object):
         # if self.infection is not None:
         randomNumber = random.random()
         if randomNumber > virus.mortality_rate:
+            # phyllis is amazing
             return True
         else:
             return False
