@@ -1,0 +1,11 @@
+Github Workflow:
+
+1. Create a branch 
+2. Switch to new branch and work on your project
+3. push it to Github
+4. On Github WEBSITE: make pull request to master (can I merge two branches?)
+5. On Github WEBSITE: Send code review request to a partner
+6. On Github WEBSITE: After approval merge new branch to master
+7. On Github WEBSITE: delete old branch
+8. On your local machine delete old branch
+9. from your machine terminal do pull request: git pull origin master
