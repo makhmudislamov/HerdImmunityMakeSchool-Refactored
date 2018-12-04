@@ -27,7 +27,11 @@ class Person(object):
         # Only called if infection attribute is not None.
         # TODO:  Finish this method. Should return a Boolean
         # if self.infection is not None:
-
+        randomNumber = random.random()
+        if randomNumber > virus.mortality_rate:
+            return True
+        else:
+            return False
 
 
 # simple unit tests to ensure your Person class initializer works correctly
