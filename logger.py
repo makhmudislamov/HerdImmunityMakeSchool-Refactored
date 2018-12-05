@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+import pytest
+
+
+
 class Logger(object):
     ''' Utility class responsible for logging all interactions during the simulation. '''
     # TODO: Write a test suite for this class to make sure each method is working
@@ -6,10 +11,13 @@ class Logger(object):
     # PROTIP: Write your tests before you solve each function, that way you can
     # test them one by one as you write your class.
 
+
+
     def __init__(self, file_name):
         # TODO:  Finish this initialization method. The file_name passed should be the
         # full file name of the file that the logs will be written to.
         self.file_name = file_name
+
 
     def write_metadata(self, pop_size, vacc_percentage, virus_name, mortality_rate,
                        basic_repro_num):
@@ -17,6 +25,7 @@ class Logger(object):
         The simulation class should use this method immediately to log the specific
         parameters of the simulation as the first line of the file.
         '''
+
         # TODO: Finish this method. This line of metadata should be tab-delimited
         # it should create the text file that we will store all logs in.
         # TIP: Use 'w' mode when you open the file. For all other methods, use
@@ -24,6 +33,8 @@ class Logger(object):
         # NOTE: Make sure to end every line with a '/n' character to ensure that each
         # event logged ends up on a separate line!
         pass
+
+
 
     def log_interaction(self, person, random_person, random_person_sick=None,
                         random_person_vacc=None, did_infect=None):
@@ -68,7 +79,19 @@ class Logger(object):
         # NOTE: Here is an opportunity for a stretch challenge!
         pass
 
+# TODO: comback and fix this test
+def test_logger():
 
-def test_logger_instantiation():
-    logger = Logger("simulation")
-    assert file_name == "simulation"
+    logger = Logger("simulation.txt")
+    logger.write_metadata(200, 0.45, "Ebola", 0.66, 0.23)
+
+    # assert file.read(1)
+
+
+def test_write_metadata():
+    logger = Logger("simulation.txt")
+
+    # assert write_metadata.vacc_percentage == 0.2
+    # assert write_metadata.virus_name == "HIV"
+    # assert write_metadata.mortality_rate == 0.8
+    # assert write_metadata.basic_repro_num == 3.2

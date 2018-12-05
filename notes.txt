@@ -1,6 +1,6 @@
 Github Workflow:
 
-1. Create a branch 
+1. Create a branch on from your terminal: git checkout -b <<branch name>>
 2. Switch to new branch and work on your project
 3. push it to Github: git add. , git commit "message", git push origin <<new branch name>>
 4. On Github WEBSITE: make pull request to master (can I merge two branches?)
