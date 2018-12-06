@@ -80,18 +80,39 @@ class Logger(object):
         pass
 
 # TODO: comback and fix this test
-def test_logger():
+def test_logger_instantiation():
 
     logger = Logger("simulation.txt")
-    logger.write_metadata(200, 0.45, "Ebola", 0.66, 0.23)
+    assert logger.file_name == "simulation.txt"
+    # logger.write_metadata(200, 0.45, "Ebola", 0.66, 0.23)
 
     # assert file.read(1)
 
-
 def test_write_metadata():
     logger = Logger("simulation.txt")
+    # logger.write_metadata(200, 0.45, "Ebola", 0.66, 0.23)
+    # logger.write_metadata(200, 0.45, "Ebola", 0.66, 0.23)
+    # assert md.vacc_percentage == 0.2
 
-    # assert write_metadata.vacc_percentage == 0.2
-    # assert write_metadata.virus_name == "HIV"
-    # assert write_metadata.mortality_rate == 0.8
-    # assert write_metadata.basic_repro_num == 3.2
+    ''' read the file '''
+
+    # logger.open("r")
+    # file = open("simulation.txt", "r")
+    # file.read()
+
+    '''parse the file'''
+
+    # while True:
+    #     text = file.readline()
+    #     if "Ebola" in text:
+    #         print(text)
+
+    '''look for metadata and search for pop_size'''
+
+    ''' check if that value matches the test value '''
+    assert logger.file_name is "simulation.txt"
+
+    # assert md.pop_size == 200
+    # assert logger.write_metadata.virus_name == "HIV"
+    # assert logger.write_metadata.mortality_rate == 0.8
+    # assert logger.write_metadata.basic_repro_num == 3.2
