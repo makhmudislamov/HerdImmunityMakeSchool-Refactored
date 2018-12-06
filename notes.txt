@@ -9,3 +9,12 @@ Github Workflow:
 7. On Github WEBSITE: delete old branch
 8. On your local machine delete old branch: git branch -d <<branch name>>
 9. from your machine terminal do pull request: git pull origin master
+
+
+
+TDD development:
+
+Your tests should fail and then based on the failure you should write function.
+Example:
+test: assert if the file is created. It should fail. >>> write a line in actual function that creates a file. 
+>>> re-run the test, now it should pass.

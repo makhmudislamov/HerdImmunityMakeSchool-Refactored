@@ -14,8 +14,6 @@ class Logger(object):
 
 
     def __init__(self, file_name):
-        # TODO:  Finish this initialization method. The file_name passed should be the
-        # full file name of the file that the logs will be written to.
         self.file_name = file_name
 
 
@@ -25,6 +23,8 @@ class Logger(object):
         The simulation class should use this method immediately to log the specific
         parameters of the simulation as the first line of the file.
         '''
+        # creating a logger file and pythone can write on it
+        logger_file = open(self.file_name, 'w')
 
         # TODO: Finish this method. This line of metadata should be tab-delimited
         # it should create the text file that we will store all logs in.
@@ -84,22 +84,22 @@ def test_logger_instantiation():
 
     logger = Logger("simulation.txt")
     assert logger.file_name == "simulation.txt"
-    # logger.write_metadata(200, 0.45, "Ebola", 0.66, 0.23)
-
-    # assert file.read(1)
+   
 
 def test_write_metadata():
     logger = Logger("simulation.txt")
-    # logger.write_metadata(200, 0.45, "Ebola", 0.66, 0.23)
-    # logger.write_metadata(200, 0.45, "Ebola", 0.66, 0.23)
-    # assert md.vacc_percentage == 0.2
+    logger.write_metadata(200, 0.45, "Ebola", 0.66, 0.23)
+       
+    file = open("simulation.txt", "r")
+    data = file.read()
 
-    ''' read the file '''
+    print('file_data, {}'.format(data))
+    # here checking the file has 5 lines,
+    assert len(data.split(' ')) == 5
 
-    # logger.open("r")
-    # file = open("simulation.txt", "r")
-    # file.read()
-
+    # testing if the file is created >>> it failed, then I wrote logger_file = open(self.file_name, 'w') on line 27, then test passed
+    assert file is not None
+    assert False
     '''parse the file'''
 
     # while True:
@@ -110,7 +110,7 @@ def test_write_metadata():
     '''look for metadata and search for pop_size'''
 
     ''' check if that value matches the test value '''
-    assert logger.file_name is "simulation.txt"
+    
 
     # assert md.pop_size == 200
     # assert logger.write_metadata.virus_name == "HIV"
