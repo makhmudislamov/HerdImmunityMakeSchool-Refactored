@@ -14,7 +14,7 @@ class Simulation(object):
     infected people in a population are all variables that can be set when the program is run.
     '''
 
-    def __init__(self, pop_size, vacc_percentage, initial_infected=1, virus):
+    def __init__(self, pop_size, vacc_percentage, initial_infected, virus):
         ''' Logger object logger records all events during the simulation.
         Population represents all Persons in the population.
         The next_person_id is the next available id for all created Persons,
@@ -36,18 +36,17 @@ class Simulation(object):
         # TODO: Store each newly infected person's ID in newly_infected attribute.
         # At the end of each time step, call self._infect_newly_infected()
         # and then reset .newly_infected back to an empty list.
+        self.pop_size = pop_size  # Int
+        self.vacc_percentage = vacc_percentage  # float between 0 and 1
+        self.initial_infected = initial_infected  # Int
+        self.virus = virus  # Virus object
         self.logger = None
         self.population = []  # List of Person objects
-        self.pop_size = pop_size  # Int
         self.next_person_id = 0  # Int
-        self.virus = virus  # Virus object
-        self.initial_infected = initial_infected  # Int
         self.total_infected = 0  # Int
         self.current_infected = 0  # Int
-        self.vacc_percentage = vacc_percentage  # float between 0 and 1
         self.total_dead = 0  # Int
-        self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
-            virus_name, population_size, vacc_percentage, initial_infected)
+        self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(virus, pop_size, vacc_percentage, initial_infected)
         self.newly_infected = []
 
     def _create_population(self, initial_infected):
@@ -94,7 +93,7 @@ class Simulation(object):
         while should_continue:
             # TODO: for every iteration of this loop, call self.time_step() to compute another
             # round of this simulation.
-        print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
+            print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
         pass
 
     def time_step(self):
@@ -162,3 +161,20 @@ if __name__ == "__main__":
     sim = Simulation(pop_size, vacc_percentage, initial_infected, virus)
 
     sim.run()
+
+
+def test_class_inst():
+    simulation = Simulation(200, 0.75, 1, "Ebola")
+    assert simulation.pop_size == 200
+    assert simulation.vacc_percentage == 0.75
+    assert simulation.initial_infected == 1
+    assert simulation.virus == "Ebola"
+    assert simulation.total_infected == 0
+    assert simulation.logger == None
+    assert simulation.population == []
+    assert simulation.next_person_id == 0
+    assert simulation.total_infected ==0
+    assert simulation.total_dead == 0
+    assert simulation.file_name == "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format("Ebola", 200, 0.75, 1)
+    assert simulation.newly_infected == []
+

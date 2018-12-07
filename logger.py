@@ -115,5 +115,7 @@ def test_write_metadata():
     # testing if the file is created >>> it failed, then I wrote logger_file = open(self.file_name, 'w') on line 27, then test passed
     assert file is not None
   
+def test_log_interaction():
+    pass
 
     
