@@ -162,7 +162,7 @@ if __name__ == "__main__":
 
     sim.run()
 
-
+# Testing Simulation class inst
 def test_class_inst():
     simulation = Simulation(200, 0.75, 1, "Ebola")
     assert simulation.pop_size == 200
@@ -177,4 +177,8 @@ def test_class_inst():
     assert simulation.total_dead == 0
     assert simulation.file_name == "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format("Ebola", 200, 0.75, 1)
     assert simulation.newly_infected == []
+
+# Test for _create_pop function
+def test_create_population():
+    pass
 
