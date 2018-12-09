@@ -2,7 +2,7 @@
 import pytest
 import os
 
-
+from person import Person
 
 class Logger(object):
     ''' Utility class responsible for logging all interactions during the simulation. '''
@@ -20,18 +20,27 @@ class Logger(object):
 
     def write_metadata(self, pop_size, vacc_percentage, virus_name, mortality_rate,
                        basic_repro_num):
-       
+
+
+        if os.path.exists(self.file_name):
+            writeMode = 'a'
+        else:
+            writeMode = 'w'
+
+        # myLogFile = open(self.file_name, writeMode)
+        # myString = "pop_size: {0} \nvacc_percentage: {1} \nvirus_name: {2} \nmortality_rate: {3} \nbasic_repro_num: {4}\n".format(
+
+
         writeMode = 'w'
-        # Per Alan's instructions we dont need append mode, the file should be empty at each new simulation run. 
+        # Per Alan's instructions we dont need append mode, the file should be empty at each new simulation run.
         # if os.path.exists(self.file_name):
-        #     
+        #
         #     writeMode = 'a'
         # else:
         #     writeMode = 'w'
 
         myLogFile = open(self.file_name, writeMode)
-        myString = "pop_size: {0}\t vacc_percentage: {1}\t virus_name: {2}\t mortality_rate: {3}\t basic_repro_num: {4}\n".format(
-            pop_size, vacc_percentage, virus_name, mortality_rate, basic_repro_num)
+        myString = "pop_size: {0}\t vacc_percentage: {1}\t virus_name: {2}\t mortality_rate: {3}\t basic_repro_num: {4}\n".format(pop_size, vacc_percentage, virus_name, mortality_rate, basic_repro_num)
         myLogFile.write(myString)
 
         myLogFile.close()
@@ -57,7 +66,7 @@ class Logger(object):
         elif random_person_sick is True:
             outFile.write("{0} is already infected, nothing happened!\n".format(random_person._id))
         elif random_person_vacc is False and random_person_sick is None:
-            outFile.write("{0} infected {1}\n!".format(person._id, random_person._id))
+            outFile.write("{0} infected {1}!\n".format(person._id, random_person._id))
         else:
             outFile.write("No interaction logged\n")
 
@@ -96,29 +105,86 @@ class Logger(object):
 
         outFile.write("Time step: {0} ended...beginning {1}\n".format(time_step_number, time_step_number + 1))
 
-# TODO: comback and fix this test
 def test_logger_instantiation():
+
+
+    logger = Logger("simulation.txt")
+    assert logger.file_name == "simulation.txt"
+
 
     logger = Logger("logger_file.txt")
     assert logger.file_name == "logger_file.txt"
-   
+
+
 
 def test_write_metadata():
     logger = Logger("logger_file.txt")
     logger.write_metadata(200, 0.45, "HIV", 0.88, 0.23)
-       
+
+
+    file = open("simulation.txt", "r")
+    assert file is not None
+    linesInFile = file.readlines()
+    lastFiveLinesInFile = linesInFile[-5:]
+
+    for i, line in enumerate(lastFiveLinesInFile):
+        splitLine = line.split(" ")
+        if i == 0: # current line == 1,
+            if "200" in line:
+                lineOneArray = splitLine
+                assert lineOneArray[1] == "200"
+        if i == 1:
+            if "0.45" in line:
+                lineTwoArray = splitLine
+                assert lineTwoArray[1] == "0.45"
+        if i == 2:
+            if "HIV" in line:
+                lineThreeArray = splitLine
+                assert lineThreeArray[1] == "HIV"
+        if i == 3:
+            if "0.88" in line:
+                lineFourArray = splitLine
+                assert lineFourArray[1] == "0.88"
+        if i == 4:
+            if "0.23" in line:
+                lineFiveArray = splitLine
+                assert lineFiveArray[1] == "0.23\n"
+
+def test_log_interaction_():
+
+
+    # def log_interaction(self, person, random_person, random_person_sick=None,
+    #                     random_person_vacc=None, did_infect=None):
+    logger = Logger("simulation.txt")
+
+    person1 = Person("sam", True, True) # is alive & vaccinated
+    person2 = Person("bob", False, False) # is alive & not vaccinated
+
+    logger.log_interaction(person1, person2, False, True)
+
+    logger.log_interaction(person1, person2, True)
+
+
     file = open("logger_file.txt", "r")
     data = file.read()
 
-    # TODO: get this test checked with TA. 
+    # TODO: get this test checked with TA.
     print(data)
     # here checking the file has input
-    assert len(data.split(' ')) != 0   
+    assert len(data.split(' ')) != 0
 
-    # testing if the file is created >>> it failed, then I wrote logger_file = open(self.file_name, 'w') on line 27, then test passed
+
+    logger.log_interaction(person1, person2, None, False)
+
+    file = open("simulation.txt", "r")
     assert file is not None
-  
+
+    linesInFile = file.readlines()
+
+
 def test_log_interaction():
     pass
 
-    
+
+    # elif random_person_sick is True:
+    # elif random_person_vacc is False and random_person_sick is None:

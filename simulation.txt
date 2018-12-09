@@ -1,0 +1,3 @@
+bob is vaccinated, nothing happened!
+bob is already infected, nothing happened!
+sam infected bob!
