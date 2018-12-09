@@ -47,7 +47,7 @@ class Simulation(object):
         self.vacc_percentage = vacc_percentage  # float between 0 and 1
         self.total_dead = 0  # Int
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
-            virus_name, pop_size, vacc_percentage, initial_infected)
+            virus, pop_size, vacc_percentage, initial_infected)
         self.newly_infected = []
 
     def _create_population(self, initial_infected):
@@ -108,7 +108,19 @@ class Simulation(object):
                 bool: True for simulation should continue, False if it should end.
         '''
         # TODO: Complete this helper method.  Returns a Boolean.
-        pass
+        deadPeople = []
+        continueSimulation = True
+        for person in self.population:
+            if person.is_alive == False:
+                deadPeople.append(person)
+
+        if len(deadPeople) == self.pop_size:  # the entire pop. is dead
+            continueSimulation = False
+        elif self.current_infected == 0:  # no infected people left
+            continueSimulation = False
+        else:  # otherwise continue simulation
+            continueSimulation = True
+
 
     def run(self):
         ''' This method should run the simulation until all requirements for ending
@@ -124,10 +136,13 @@ class Simulation(object):
         time_step_counter = 0
         should_continue = None
 
+        should_continue = self._simulation_should_continue()
         while should_continue:
-            # TODO: for every iteration of this loop, call self.time_step() to compute another
-            # round of this simulation.
-            print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
+            self.time_step()
+            time_step_counter += 1
+            self.logger.log_time_step(time_step_counter)
+            should_continue = self._simulation_should_continue()
+        print("The simulation has ended after {0} turns.".format(time_step_counter))
 
     def time_step(self):
         ''' This method should contain all the logic for computing one time step
@@ -155,6 +170,26 @@ class Simulation(object):
         assert person.is_alive == True
         assert random_person.is_alive == True
 
+        if random_person.is_vaccinated == True:
+            # random person is vaccinated
+            self.logger.log_interaction(person, random_person, False, True, False)
+            # pass
+        elif random_person.infection != None:
+            # random person is already infected
+            self.logger.log_interaction(person, random_person, False, False, True)
+            # pass
+        elif (random_person.is_vaccinated == False) and (random_person.infection == None):
+            # random person is not vaccinated, but is healthy then gets infected by person
+            randomNum = random.uniform(0, 1)
+            if randomNum < self.basic_repro_num:
+                self.newly_infected.append(random_person._id)
+                random_person.infection = self.virus_name
+            self.logger.log_interaction(person, random_person, True, False, False)
+        else:
+            # no interaction
+            self.logger.log_interaction(person, random_person, None, random_person.is_vaccinated,
+                                        random_person.infection)
+
         # TODO: Finish this method.
         #  The possible cases you'll need to cover are listed below:
         # random_person is vaccinated:
@@ -175,7 +210,13 @@ class Simulation(object):
         # TODO: Call this method at the end of every time step and infect each Person.
         # TODO: Once you have iterated through the entire list of self.newly_infected, remember
         # to reset self.newly_infected back to an empty list.
-        pass
+        for infectedId in self.newly_infected:
+            for person in self.population:
+                if infectedId == person._id:
+                    person.infection = self.virus_name
+                    self.current_infected += 1
+                    self.total_infected += 1
+        self.newly_infected = []
 
 
 if __name__ == "__main__":
@@ -198,7 +239,7 @@ if __name__ == "__main__":
 
 # Testing Simulation class inst
 def test_class_inst():
-    simulation = Simulation(200, 0.75, 1, "Ebola")
+    simulation = Simulation(200, 0.75, "Ebola", 1)
     assert simulation.pop_size == 200
     assert simulation.vacc_percentage == 0.75
     assert simulation.initial_infected == 1
