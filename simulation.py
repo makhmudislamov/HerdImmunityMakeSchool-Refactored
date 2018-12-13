@@ -160,8 +160,6 @@ virus = Virus("HIV", 0.4, 0.8)
 sim = Simulation(30000, 0.1, 23, virus)
 
 
-# Simulation._create_population(1, initial_infected=10)
-
 # Testing Simulation class inst
 def test_class_inst():
     simulation = Simulation(200, 0.75, "Ebola", 1)
