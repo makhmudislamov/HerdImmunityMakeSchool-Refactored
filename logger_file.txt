@@ -1,1 +1,0 @@
-pop_size: 200	 vacc_percentage: 0.45	 virus_name: HIV	 mortality_rate: 0.88	 basic_repro_num: 0.23

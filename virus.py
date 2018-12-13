@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import pytest
+# import pytest
 
 
 class Virus(object):
